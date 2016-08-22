@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from os import *
+import os
 import sys
 import argparse
 
@@ -19,7 +20,7 @@ renameLayoutToLayoutView = True
 renameItemToChild = True
 apiCleanup = True
 
-codemod = "%s/bin/codemod.py" %  path.dirname(__file__)
+codemod = "python %s" % os.path.join(os.path.dirname(os.path.abspath(__file__)), "bin", "codemod.py")
 
 def confirm():
   if args.all == True:
@@ -38,9 +39,12 @@ def confirm():
 def sub(search, replace):
   print "\n\033[94mReplace:\n\n\033[91m    %s \033[0m with \033[92m %s \033[0m \033[93m\n\n[y,n,q]\033[0m " % (search, replace),
   good = confirm()
+  searchStr = search.replace("'", "\"")
+  replaceStr = replace.replace("'", "\"")
 
   if good:
-    cmd = ("%s -m --extensions js,coffee -d %s %s %s" % (codemod, args.path, search, replace))
+    cmd = ("%s -m --extensions js,coffee -d %s %s %s" % (codemod, args.path, searchStr, replaceStr))
+#    print cmd
     print "\n\n"
     system(cmd)
 

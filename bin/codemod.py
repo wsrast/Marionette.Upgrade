@@ -742,7 +742,7 @@ def _terminal_set_color(color):
 
 def _terminal_restore_color():
   import curses, sys
-  sys.stdout.write(curses.tigetstr('sgr0'))
+#  sys.stdout.write(curses.tigetstr('sgr0'))
 
 def print_through_less(text):
   """
